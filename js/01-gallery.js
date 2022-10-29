@@ -31,13 +31,15 @@ let instance;
 
 function onImageModalOpen(event) {
   event.preventDefault();
-  window.addEventListener('keydown', onEscKeyPress);
 
   if (!event.target.classList.contains('gallery__image')) {
     return;
   }
   const imageUrl = event.target.dataset.source;
   instance = basicLightbox.create(`<img width="1280" src="${imageUrl}">`, {
+    onShow: instance => {
+      window.addEventListener('keydown', onEscKeyPress);
+    },
     onClose: instance => {
       window.removeEventListener('keydown', onEscKeyPress);
     },
